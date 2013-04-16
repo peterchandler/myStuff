@@ -1,14 +1,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="jemstone.mystuff"
-    android:versionCode="1"
-    android:versionName="1.0">
-
-    <uses-sdk android:minSdkVersion="14" android:targetSdkVersion="15" />
-
-    <application android:label="@string/titleApplication"
-        android:icon="@drawable/ic_launcher"
-        android:theme="@style/AppTheme">
-
-    </application>
-
+  package="jemstone.mystuff"
+  android:versionCode="1"
+  android:versionName="1.0.0">
+  <uses-sdk
+    android:minSdkVersion="11"
+    android:targetSdkVersion="11"/>
+  <application
+    android:icon="@drawable/ic_launcher"
+    android:label="@string/titleApplication"
+    android:theme="@style/AppTheme">
+  </application>
 </manifest>
