@@ -11,6 +11,8 @@ public class EntityManager implements jemstone.model.EntityManager, Printable {
   private static EntityManager manager = null;
 
   private final IdFactory idFactory = new IdFactory();
+  private final ItemFactory itemFactory = new ItemFactory();
+  private final PhotoFactory photoFactory = new PhotoFactory();
   private final CategoryFactory categoryFactory = new CategoryFactory();
   
   private boolean isModified;
@@ -36,8 +38,16 @@ public class EntityManager implements jemstone.model.EntityManager, Printable {
     return idFactory;
   }
 
+  public ItemFactory getItemFactory() {
+    return itemFactory;
+  }
+
   public CategoryFactory getCategoryFactory() {
     return categoryFactory;
+  }
+
+  public PhotoFactory getPhotoFactory() {
+    return photoFactory;
   }
 
   /**
@@ -53,6 +63,29 @@ public class EntityManager implements jemstone.model.EntityManager, Printable {
 
   public Category getCategory(String name) {
     return categoryFactory.create(name);
+  }
+
+  /**
+   * @return the items
+   */
+  public List<Item> getItems() {
+    return itemFactory.values();
+  }
+
+  public Item getItem(int id) {
+    return itemFactory.get(id);
+  }
+
+  public Item newItem() {
+    return itemFactory.add();
+  }
+
+  public Photo getPhoto(int id) {
+    return photoFactory.get(id);
+  }
+
+  public Photo newPhoto() {
+    return photoFactory.add();
   }
 
   /**
@@ -89,6 +122,10 @@ public class EntityManager implements jemstone.model.EntityManager, Printable {
   }
 
   public class CategoryFactory extends EntityFactory<Category> {
+    protected Category add() {
+      return add(idFactory.nextCategoryId());
+    }
+
     @Override
     protected Category add(int id) {
       return add(new Category(id));
@@ -96,7 +133,45 @@ public class EntityManager implements jemstone.model.EntityManager, Printable {
 
     @Override
     protected Category add(String name) {
-      return add(new Category(name));
+      Category category = add();
+      category.setName(name);
+      return category;
+    }
+  }
+
+  public class ItemFactory extends EntityFactory<Item> {
+    protected Item add() {
+      return add(idFactory.nextItemId());
+    }
+
+    @Override
+    protected Item add(int id) {
+      return add(new Item(id));
+    }
+
+    @Override
+    protected Item add(String name) {
+      Item item = add();
+      item.setName(name);
+      return item;
+    }
+  }
+
+  public class PhotoFactory extends EntityFactory<Photo> {
+    protected Photo add() {
+      return add(idFactory.nextPhotoId());
+    }
+
+    @Override
+    protected Photo add(int id) {
+      return add(new Photo(id));
+    }
+
+    @Override
+    protected Photo add(String name) {
+      Photo photo = add();
+      photo.setName(name);
+      return photo;
     }
   }
 }

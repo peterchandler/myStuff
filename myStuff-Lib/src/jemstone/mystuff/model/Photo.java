@@ -3,23 +3,20 @@ package jemstone.mystuff.model;
 import java.io.PrintWriter;
 
 import jemstone.model.Entity;
-import jemstone.model.HasDescription;
 import jemstone.model.HasName;
 import jemstone.util.Printer;
 
 /**
- * @author Peter
- * @version 1.0
- * @created 08-Jun-2011 21:25:47
+ * Represents a photo of an {@link Item}
  */
-public class Category extends Entity implements HasName, HasDescription {
-  /** The name of the category */
+public class Photo extends Entity implements HasName {
+  /** The name of the photo file */
   private String name;
 
-  /** A short description of the category */
-  private String description;
+  /** A caption for the photo */
+  private String caption;
 
-  Category(int id) {
+  Photo(int id) {
     super(id);
   }
 
@@ -33,14 +30,12 @@ public class Category extends Entity implements HasName, HasDescription {
     this.name = name;
   }
 
-  @Override
-  public String getDescription() {
-    return description;
+  public String getCaption() {
+    return caption;
   }
 
-  @Override
-  public void setDescription(String description) {
-    this.description = description;
+  public void setCaption(String caption) {
+    this.caption = caption;
   }
 
   @Override
