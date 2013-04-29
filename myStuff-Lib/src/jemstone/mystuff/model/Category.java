@@ -13,6 +13,8 @@ import jemstone.util.Printer;
  * @created 08-Jun-2011 21:25:47
  */
 public class Category extends Entity implements HasName, HasDescription {
+  public enum F { Category, Name, Description };
+  
   /** The name of the category */
   private String name;
 

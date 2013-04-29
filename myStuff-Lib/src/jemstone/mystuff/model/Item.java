@@ -6,8 +6,6 @@ import java.util.Date;
 import java.util.List;
 
 import jemstone.model.Entity;
-import jemstone.model.HasAmount;
-import jemstone.model.HasDate;
 import jemstone.model.HasDescription;
 import jemstone.model.HasName;
 import jemstone.util.Printer;
@@ -15,7 +13,9 @@ import jemstone.util.Printer;
 /**
  * Represents an item that is being tracked
  */
-public class Item extends Entity implements HasName, HasDescription, HasDate, HasAmount {
+public class Item extends Entity implements HasName, HasDescription {
+  public enum F { Item, Name, Description, PurchaseDate, PurchaseAmount, Category, CategoryId, Photos };
+  
   /** The name of the category */
   private String name;
 
@@ -23,10 +23,10 @@ public class Item extends Entity implements HasName, HasDescription, HasDate, Ha
   private String description;
   
   /** The date that the item was acquired */
-  private Date date;
+  private Date purchaseDate;
   
   /** The value of this item */
-  private double amount;
+  private double purchaseAmount;
   
   /** The {@link Category} that is used to classify this item */
   private Category category;
@@ -58,22 +58,20 @@ public class Item extends Entity implements HasName, HasDescription, HasDate, Ha
     this.description = description;
   }
 
-  @Override
-  public Date getDate() {
-    return date;
+  public Date getPurchaseDate() {
+    return purchaseDate;
   }
 
-  public void setDate(Date date) {
-    this.date = date;
+  public void setPurchaseDate(Date date) {
+    this.purchaseDate = date;
   }
 
-  @Override
-  public double getAmount() {
-    return amount;
+  public double getPurchaseAmount() {
+    return purchaseAmount;
   }
 
-  public void setAmount(double amount) {
-    this.amount = amount;
+  public void setPurchaseAmount(double amount) {
+    this.purchaseAmount = amount;
   }
 
   public Category getCategory() {

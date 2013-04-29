@@ -1,10 +1,12 @@
 package jemstone.mystuff.model.compare;
 
+import jemstone.mystuff.dao.XmlConstants;
 import jemstone.mystuff.model.IdFactory;
+import jemstone.mystuff.model.IdFactory.F;
 import jemstone.util.compare.BaseComparator;
 import jemstone.util.compare.CompareException;
 
-public class IdFactoryComparator extends BaseComparator<IdFactory> {
+public class IdFactoryComparator extends BaseComparator<IdFactory> implements XmlConstants {
   private boolean strict = false;
 
   public IdFactoryComparator(boolean compareId, boolean strict) {
@@ -14,13 +16,16 @@ public class IdFactoryComparator extends BaseComparator<IdFactory> {
 
   @Override
   public boolean equals(IdFactory o1, IdFactory o2) throws CompareException {
-    if (checkNull("IdFactory", o1, o2)) {
+    if (checkNull(F.IdFactory, o1, o2)) {
       return (o1 == o2);
     }
 
     try {
       boolean result = true;
-      result &= equals("nextCategoryId", o1.getNextCategoryId(), o2.getNextCategoryId());
+      result &= equals(F.NextCategoryId, o1.getNextCategoryId(), o2.getNextCategoryId());
+      result &= equals(F.NextItemId, o1.getNextItemId(), o2.getNextItemId());
+      result &= equals(F.NextPhotoId, o1.getNextPhotoId(), o2.getNextPhotoId());
+      result &= equals(F.NextPropertyId, o1.getNextPropertyId(), o2.getNextPropertyId());
 
       if (strict) {
       }

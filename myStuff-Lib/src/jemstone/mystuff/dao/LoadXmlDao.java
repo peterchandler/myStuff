@@ -3,11 +3,15 @@ package jemstone.mystuff.dao;
 import java.io.IOException;
 import java.util.Date;
 
+import jemstone.mystuff.model.Address;
+import jemstone.mystuff.model.Building;
 import jemstone.mystuff.model.Category;
 import jemstone.mystuff.model.EntityManager;
 import jemstone.mystuff.model.IdFactory;
 import jemstone.mystuff.model.Item;
 import jemstone.mystuff.model.Photo;
+import jemstone.mystuff.model.Property;
+import jemstone.mystuff.model.Vehicle;
 import jemstone.util.file.AbstractLoadXmlDao;
 import jemstone.util.file.DaoException;
 
@@ -18,7 +22,11 @@ public class LoadXmlDao extends AbstractLoadXmlDao implements XmlConstants {
   private final EntityManager manager;
   private final IdFactoryParser idFactoryParser = new IdFactoryParser();
   private final CategoryParser categoryParser = new CategoryParser();
+  private final PropertyParser propertyParser = new PropertyParser();
+  private final AddressParser addressParser = new AddressParser();
   private final ItemParser itemParser = new ItemParser();
+  private final BuildingParser buildingParser = new BuildingParser();
+  private final VehicleParser vehicleParser = new VehicleParser();
   private final PhotoParser photoParser = new PhotoParser();
 
   public LoadXmlDao() throws DaoException {
@@ -28,10 +36,14 @@ public class LoadXmlDao extends AbstractLoadXmlDao implements XmlConstants {
     manager = EntityManager.getInstanceNew();
 
     // Initialise the entity parsers
-    parsers.put(ID_FACTORY, idFactoryParser);
-    parsers.put(CATEGORY, categoryParser);
-    parsers.put(ITEM, itemParser);
-    parsers.put(PHOTO, photoParser);
+    parsers.put(IdFactory.F.IdFactory.name(), idFactoryParser);
+    parsers.put(Category.F.Category.name(), categoryParser);
+    parsers.put(Property.F.Property.name(), propertyParser);
+    parsers.put(Property.F.Address.name(), addressParser);
+    parsers.put(Building.F.Building.name(), buildingParser);
+    parsers.put(Vehicle.F.Vehicle.name(), vehicleParser);
+    parsers.put(Item.F.Item.name(), itemParser);
+    parsers.put(Photo.F.Photo.name(), photoParser);
   }
 
   @Override
@@ -51,8 +63,21 @@ public class LoadXmlDao extends AbstractLoadXmlDao implements XmlConstants {
     public void parse(String tag, String value) {
       final int nextId = Integer.parseInt(value);
 
-      if (tag.equals(NEXT_CATEGORY_ID)) {
-        idFactory.setNextCategoryId(nextId);
+      switch (IdFactory.F.valueOf(tag)) {
+        case IdFactory:
+          break;
+        case NextCategoryId: 
+          idFactory.setNextCategoryId(nextId);
+          break;
+        case NextItemId:
+          idFactory.setNextItemId(nextId);
+          break;
+        case NextPhotoId:
+          idFactory.setNextPhotoId(nextId);
+          break;
+        case NextPropertyId:
+          idFactory.setNextPropertyId(nextId);
+          break;
       }
     }
   }
@@ -71,16 +96,88 @@ public class LoadXmlDao extends AbstractLoadXmlDao implements XmlConstants {
 
     @Override
     public void parse(String tag, String value) {
-      if (tag.equals(NAME)) {
-        category.setName(value);
-      } else if (tag.equals(DESCRIPTION)) {
-        category.setDescription(value);
+      switch (Category.F.valueOf(tag)) {
+        case Category:
+          break;
+        case Name: 
+          category.setName(value); 
+          break;
+        case Description: 
+          category.setDescription(value); 
+          break;
       }
     }
   }
   
+  private class PropertyParser implements EntityParser {
+    private Property property;
+
+    @Override
+    public void create(int id) {
+      if (id == 0) {
+        property = manager.getPropertyFactory().get(id);
+      } else {
+        property = manager.getPropertyFactory().create(id);
+      }
+    }
+
+    @Override
+    public void parse(String tag, String value) {
+      switch (Property.F.valueOf(tag)) {
+        case Property:
+          break;
+        case Name: 
+          property.setName(value); 
+          break;
+        case Description: 
+          property.setDescription(value); 
+          break;
+        case Address:
+          break;
+        case Buildings:
+          break;
+        case Vehicles:
+          break;
+        case Items:
+          break;
+      }
+    }
+  }
+  
+  private class AddressParser implements EntityParser {
+    private Address address;
+
+    @Override
+    public void create(int id) {
+      address = propertyParser.property.getAddress();
+    }
+
+    @Override
+    public void parse(String tag, String value) {
+      switch (Address.F.valueOf(tag)) {
+        case Address:
+          break;
+        case City:
+          address.setCity(value);
+          break;
+        case CountryCode:
+          address.setCountryCode(value);
+          break;
+        case PostCode:
+          address.setPostCode(value);
+          break;
+        case Street:
+          address.setStreet(value);
+          break;
+        case Suburb:
+          address.setSuburb(value);
+          break;
+      }
+    }
+  }
+
   private class ItemParser implements EntityParser {
-    private Item item;
+    protected Item item;
 
     @Override
     public void create(int id) {
@@ -89,23 +186,106 @@ public class LoadXmlDao extends AbstractLoadXmlDao implements XmlConstants {
       } else {
         item = manager.getItemFactory().create(id);
       }
+      propertyParser.property.add(item);
     }
 
     @Override
     public void parse(String tag, String value) {
-      if (tag.equals(NAME)) {
-        item.setName(value);
-      } else if (tag.equals(DESCRIPTION)) {
-        item.setDescription(value);
-      } else if (tag.equals(AMOUNT)) {
-        double amount = Double.parseDouble(value);
-        item.setAmount(amount);
-      } else if (tag.equals(DATE)) {
-        Date date = parseDate(value);
-        item.setDate(date);
-      } else if (tag.equals(CATEGORY_ID)) {
-        Category category = manager.getCategory(Integer.parseInt(value));
-        item.setCategory(category);
+      switch (Item.F.valueOf(tag)) {
+        case Category:
+          break;
+        case Description:
+          item.setDescription(value);
+          break;
+        case Item:
+          break;
+        case Name:
+          item.setName(value);
+          break;
+        case Photos:
+          break;
+        case PurchaseAmount:
+          double amount = Double.parseDouble(value);
+          item.setPurchaseAmount(amount);
+          break;
+        case PurchaseDate:
+          Date date = parseDate(value);
+          item.setPurchaseDate(date);
+          break;
+        case CategoryId:
+          Category category = manager.getCategory(Integer.parseInt(value));
+          item.setCategory(category);
+          break;
+      }
+    }
+  }
+  
+  private class BuildingParser implements EntityParser {
+    private Building building;
+    
+    @Override
+    public void create(int id) {
+      if (id == 0) {
+        building = manager.getBuildingFactory().get(id);
+      } else {
+        building = manager.getBuildingFactory().create(id);
+      }
+      
+      itemParser.item = building;
+      propertyParser.property.add(building);
+    }
+
+    @Override
+    public void parse(String tag, String value) {
+      try {
+        switch (Building.F.valueOf(tag)) {
+          case Building:
+            break;
+        }
+      } catch (IllegalArgumentException e) {
+        itemParser.parse(tag, value);
+      }
+    }
+  }
+  
+  private class VehicleParser implements EntityParser {
+    private Vehicle vehicle;
+    
+    @Override
+    public void create(int id) {
+      if (id == 0) {
+        vehicle = manager.getVehicleFactory().get(id);
+      } else {
+        vehicle = manager.getVehicleFactory().create(id);
+      }
+      itemParser.item = vehicle;
+      propertyParser.property.add(vehicle);
+    }
+
+    @Override
+    public void parse(String tag, String value) {
+      try {
+        switch (Vehicle.F.valueOf(tag)) {
+          case Color:
+            vehicle.setColor(value);
+            break;
+          case Make:
+            vehicle.setMake(value);
+            break;
+          case Model:
+            vehicle.setModel(value);
+            break;
+          case Registration:
+            vehicle.setRegistration(value);
+            break;
+          case Vehicle:
+            break;
+          case Year:
+            vehicle.setYear(Integer.valueOf(value));
+            break;
+        }
+      } catch (IllegalArgumentException e) {
+        itemParser.parse(tag, value);
       }
     }
   }
@@ -127,10 +307,15 @@ public class LoadXmlDao extends AbstractLoadXmlDao implements XmlConstants {
 
     @Override
     public void parse(String tag, String value) {
-      if (tag.equals(NAME)) {
-        photo.setName(value);
-      } else if (tag.equals(CAPTION)) {
-        photo.setCaption(value);
+      switch (Photo.F.valueOf(tag)) {
+        case Caption:
+          photo.setCaption(value);
+          break;
+        case Name:
+          photo.setName(value);
+          break;
+        case Photo:
+          break;
       }
     }
   }

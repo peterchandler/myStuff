@@ -3,11 +3,15 @@ package jemstone.mystuff.dao;
 import java.io.IOException;
 import java.util.List;
 
+import jemstone.mystuff.model.Address;
+import jemstone.mystuff.model.Building;
 import jemstone.mystuff.model.Category;
 import jemstone.mystuff.model.EntityManager;
 import jemstone.mystuff.model.IdFactory;
 import jemstone.mystuff.model.Item;
 import jemstone.mystuff.model.Photo;
+import jemstone.mystuff.model.Property;
+import jemstone.mystuff.model.Vehicle;
 import jemstone.util.file.AbstractSaveXmlDao;
 import jemstone.util.file.DaoException;
 
@@ -24,63 +28,122 @@ public class SaveXmlDao extends AbstractSaveXmlDao<EntityManager> implements Xml
   protected void saveContent(EntityManager manager) throws IllegalArgumentException, IllegalStateException, IOException {
     // Save id factory
     final IdFactory idFactory = manager.getIdFactory();
-    serializer.startTag(NAMESPACE, ID_FACTORY);
-    write(NEXT_CATEGORY_ID, idFactory.getNextCategoryId());
-    write(NEXT_ITEM_ID, idFactory.getNextItemId());
-    write(NEXT_PHOTO_ID, idFactory.getNextPhotoId());
-    serializer.endTag(NAMESPACE, ID_FACTORY);
+    startTag(IdFactory.F.IdFactory);
+    
+    write(IdFactory.F.NextCategoryId, idFactory.getNextCategoryId());
+    write(IdFactory.F.NextItemId, idFactory.getNextItemId());
+    write(IdFactory.F.NextPhotoId, idFactory.getNextPhotoId());
+    write(IdFactory.F.NextPropertyId, idFactory.getNextPropertyId());
+    
+    endTag(IdFactory.F.IdFactory);
 
     // Save categories, items
     saveCategories(manager.getCategories());
-    saveItems(manager.getItems());
+    saveProperties(manager.getProperties());
   }
 
   private void saveCategories(List<Category> categories) throws IllegalArgumentException, IllegalStateException, IOException {
-    serializer.startTag(NAMESPACE, CATEGORIES);
+    startTag(EntityManager.F.Categories);
+    
     for (Category category : categories) {
-      serializer.startTag(NAMESPACE, CATEGORY);
+      startTag(Category.F.Category);
 
       write(category);
-      write(NAME, category.getName());
-      write(DESCRIPTION, category.getDescription());
+      write(Category.F.Name, category.getName());
+      write(Category.F.Description, category.getDescription());
 
-      serializer.endTag(NAMESPACE, CATEGORY);
+      endTag(Category.F.Category);
     }
-    serializer.endTag(NAMESPACE, CATEGORIES);
+    endTag(EntityManager.F.Categories);
+  }
+
+  private void saveProperties(List<Property> properties) throws IllegalArgumentException, IllegalStateException, IOException {
+    startTag(EntityManager.F.Properties);
+    
+    for (Property property : properties) {
+      startTag(Property.F.Property);
+
+      write(property);
+      write(Property.F.Name, property.getName());
+      write(Property.F.Description, property.getDescription());
+      
+      saveAddress(property.getAddress());
+      saveBuildings(property.getBuildings());
+      saveVehicles(property.getVehicles());
+      saveItems(property.getItems());
+
+      endTag(Property.F.Property);
+    }
+    endTag(EntityManager.F.Properties);  }
+
+  private void saveAddress(Address address) throws IllegalArgumentException, IllegalStateException, IOException {
+    startTag(Address.F.Address);
+    
+    write(Address.F.Street, address.getStreet());
+    write(Address.F.Suburb, address.getSuburb());
+    write(Address.F.City, address.getCity());
+    write(Address.F.PostCode, address.getPostCode());
+    write(Address.F.CountryCode, address.getCountryCode());
+    
+    endTag(Address.F.Address);
+  }
+
+  private void saveBuildings(List<Building> buildings) throws IllegalArgumentException, IllegalStateException, IOException {
+    for (Building building : buildings) {
+      startTag(Building.F.Building);
+
+      writeItem(building);
+      
+      endTag(Building.F.Building);
+    }
+  }
+
+  private void saveVehicles(List<Vehicle> vehicles) throws IllegalArgumentException, IllegalStateException, IOException {
+    for (Vehicle vehicle : vehicles) {
+      startTag(Vehicle.F.Vehicle);
+
+      writeItem(vehicle);
+      write(Vehicle.F.Color, vehicle.getColor());
+      write(Vehicle.F.Make, vehicle.getMake());
+      write(Vehicle.F.Model, vehicle.getModel());
+      write(Vehicle.F.Registration, vehicle.getRegistration());
+      write(Vehicle.F.Year, vehicle.getYear());
+      
+      endTag(Vehicle.F.Vehicle);
+    }
   }
 
   private void saveItems(List<Item> items) throws IllegalArgumentException, IllegalStateException, IOException {
-    serializer.startTag(NAMESPACE, ITEMS);
     for (Item item : items) {
-      serializer.startTag(NAMESPACE, ITEM);
-
-      write(item);
-      write(NAME, item.getName());
-      write(DESCRIPTION, item.getDescription());
-      write(DATE, item.getDate());
-      write(AMOUNT, item.getAmount());
-      write(CATEGORY_ID, item.getCategory());
-      
-      // Write photo ids
-      if (item.hasPhotos()) {
-        savePhotos(item.getPhotos());
-      }
-      serializer.endTag(NAMESPACE, ITEM);
+      startTag(Item.F.Item);
+      writeItem(item);
+      endTag(Item.F.Item);
     }
-    serializer.endTag(NAMESPACE, ITEMS);
+  }
+
+  public void writeItem(Item item) throws IOException {
+    write(item);
+    write(Item.F.Name, item.getName());
+    write(Item.F.Description, item.getDescription());
+    write(Item.F.PurchaseDate, item.getPurchaseDate());
+    write(Item.F.PurchaseAmount, item.getPurchaseAmount());
+    write(Item.F.CategoryId, item.getCategory());
+    
+    // Write photo ids
+    if (item.hasPhotos()) {
+      savePhotos(item.getPhotos());
+    }
   }
 
   private void savePhotos(List<Photo> photos) throws IllegalArgumentException, IllegalStateException, IOException {
-    serializer.startTag(NAMESPACE, PHOTOS);
     for (Photo photo : photos) {
-      serializer.startTag(NAMESPACE, PHOTO);
+      startTag(Photo.F.Photo);
 
       write(photo);
-      write(NAME, photo.getName());
-      write(CAPTION, photo.getCaption());
+      write(Photo.F.Name, photo.getName());
+      write(Photo.F.Caption, photo.getCaption());
 
-      serializer.endTag(NAMESPACE, PHOTO);
+      endTag(Photo.F.Photo);
     }
-    serializer.endTag(NAMESPACE, PHOTOS);
   }
 }

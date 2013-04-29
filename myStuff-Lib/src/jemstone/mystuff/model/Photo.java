@@ -10,6 +10,8 @@ import jemstone.util.Printer;
  * Represents a photo of an {@link Item}
  */
 public class Photo extends Entity implements HasName {
+  public enum F { Photo, Name, Caption };
+  
   /** The name of the photo file */
   private String name;
 

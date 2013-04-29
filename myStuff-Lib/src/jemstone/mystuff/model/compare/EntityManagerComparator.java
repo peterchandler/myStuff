@@ -3,15 +3,16 @@ package jemstone.mystuff.model.compare;
 import jemstone.mystuff.dao.XmlConstants;
 import jemstone.mystuff.model.Category;
 import jemstone.mystuff.model.EntityManager;
-import jemstone.mystuff.model.Item;
+import jemstone.mystuff.model.EntityManager.F;
+import jemstone.mystuff.model.Property;
 import jemstone.util.compare.BaseComparator;
 import jemstone.util.compare.CompareException;
 import jemstone.util.compare.ListComparator;
 
 public class EntityManagerComparator extends BaseComparator<EntityManager> implements XmlConstants {
   private IdFactoryComparator idFactoryComparator;
-  private ListComparator<Item> itemComparator;
   private ListComparator<Category> categoryComparator;
+  private ListComparator<Property> propertyComparator;
 
   public EntityManagerComparator(boolean compareId) {
     this(compareId, true);
@@ -21,24 +22,25 @@ public class EntityManagerComparator extends BaseComparator<EntityManager> imple
     super(compareId);
 
     idFactoryComparator = new IdFactoryComparator(compareId, false);
-    itemComparator = new ListComparator<Item>(compareId, ITEMS, new ItemComparator(compareId));
-    categoryComparator = new ListComparator<Category>(compareId, CATEGORIES, new CategoryComparator(compareId));
+    categoryComparator = new ListComparator<Category>(compareId, F.Categories.name(), new CategoryComparator(compareId));
+    propertyComparator = new ListComparator<Property>(compareId, F.Properties.name(), new PropertyComparator(compareId));
 
     addChild(idFactoryComparator);
-    addChild(itemComparator);
+    addChild(propertyComparator);
     addChild(categoryComparator);
   }
 
   @Override
   public boolean equals(EntityManager o1, EntityManager o2) throws CompareException {
-    if (checkNull("EntityManager", o1, o2)) {
+    if (checkNull(F.EntityManager, o1, o2)) {
       return (o1 == o2);
     }
 
     boolean result = true;
     result &= categoryComparator.equals(o1.getCategories(), o2.getCategories());
+    result &= propertyComparator.equals(o1.getProperties(), o2.getProperties());
     result &= idFactoryComparator.equals(o1.getIdFactory(), o2.getIdFactory());
-    result &= itemComparator.equals(o1.getItems(), o2.getItems());
+    
     return result;
   }
 }

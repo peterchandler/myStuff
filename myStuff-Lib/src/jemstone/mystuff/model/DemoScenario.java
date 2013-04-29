@@ -17,18 +17,28 @@ public class DemoScenario {
     Category general = manager.getCategory("General");
     Category vehicles = manager.getCategory("Vehicles");
     
-    Item car = manager.newItem();
-    car.setName("BMW 325");
-    car.setAmount(23999.0);
+    Property property = manager.newProperty();
+    Address address = property.getAddress();
+    address.setStreet("1 Lake Road");
+    address.setSuburb("Takapuna");
+    address.setCity("Auckland");
+    address.setPostCode("0123");
+    address.setCountryCode("NZ");
+
+    Vehicle car = property.add(manager.newVehicle());
     car.setCategory(vehicles);
-    car.setDate(DateUtil.calendar(2010, 6, 15).getTime());
+    car.setMake("BMW");
+    car.setModel("325i");
+    car.setYear(2005);
+    car.setPurchaseAmount(23999.0);
+    car.setPurchaseDate(DateUtil.calendar(2010, 6, 15).getTime());
     car.addPhoto(manager.newPhoto()).setName("Car Photo 1");
     car.addPhoto(manager.newPhoto()).setName("Car Photo 2");
     
-    Item house = manager.newItem();
-    house.setAmount(750000.0);
+    Building house = property.add(manager.newBuilding());
     house.setCategory(home);
-    house.setDate(DateUtil.calendar(2001, 9, 1).getTime());
+    house.setPurchaseAmount(750000.0);
+    house.setPurchaseDate(DateUtil.calendar(2001, 9, 1).getTime());
     house.addPhoto(manager.newPhoto()).setName("House Photo");
     
     return manager;

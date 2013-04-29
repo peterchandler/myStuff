@@ -1,9 +1,12 @@
 package jemstone.mystuff.model;
 
 public class IdFactory {
+  public enum F { IdFactory, NextCategoryId, NextItemId, NextPhotoId, NextPropertyId };
+  
   private int nextCategoryId = 1;
   private int nextItemId = 1;
   private int nextPhotoId = 1;
+  private int nextPropertyId = 1;
 
   public int nextCategoryId() {
     return nextCategoryId++;
@@ -15,6 +18,10 @@ public class IdFactory {
 
   public int nextPhotoId() {
     return nextPhotoId++;
+  }
+
+  public int nextPropertyId() {
+    return nextPropertyId++;
   }
 
   /**
@@ -45,5 +52,13 @@ public class IdFactory {
 
   public void setNextPhotoId(int nextPhotoId) {
     this.nextPhotoId = nextPhotoId;
+  }
+
+  public int getNextPropertyId() {
+    return nextPropertyId;
+  }
+
+  public void setNextPropertyId(int nextPropertyId) {
+    this.nextPropertyId = nextPropertyId;
   }
 }

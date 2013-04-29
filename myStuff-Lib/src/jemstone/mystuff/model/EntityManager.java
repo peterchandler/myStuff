@@ -8,12 +8,17 @@ import jemstone.util.Printable;
 import jemstone.util.Printer;
 
 public class EntityManager implements jemstone.model.EntityManager, Printable {
+  public enum F { EntityManager, Categories, Properties };
+  
   private static EntityManager manager = null;
 
   private final IdFactory idFactory = new IdFactory();
-  private final ItemFactory itemFactory = new ItemFactory();
-  private final PhotoFactory photoFactory = new PhotoFactory();
   private final CategoryFactory categoryFactory = new CategoryFactory();
+  private final PropertyFactory propertyFactory = new PropertyFactory();
+  private final ItemFactory itemFactory = new ItemFactory();
+  private final BuildingFactory buildingFactory = new BuildingFactory();
+  private final VehicleFactory vehicleFactory = new VehicleFactory();
+  private final PhotoFactory photoFactory = new PhotoFactory();
   
   private boolean isModified;
 
@@ -38,16 +43,28 @@ public class EntityManager implements jemstone.model.EntityManager, Printable {
     return idFactory;
   }
 
-  public ItemFactory getItemFactory() {
-    return itemFactory;
-  }
-
   public CategoryFactory getCategoryFactory() {
     return categoryFactory;
   }
 
+  public PropertyFactory getPropertyFactory() {
+    return propertyFactory;
+  }
+
   public PhotoFactory getPhotoFactory() {
     return photoFactory;
+  }
+
+  public ItemFactory getItemFactory() {
+    return itemFactory;
+  }
+
+  public BuildingFactory getBuildingFactory() {
+    return buildingFactory;
+  }
+
+  public VehicleFactory getVehicleFactory() {
+    return vehicleFactory;
   }
 
   /**
@@ -80,12 +97,40 @@ public class EntityManager implements jemstone.model.EntityManager, Printable {
     return itemFactory.add();
   }
 
+  public Building newBuilding() {
+    return buildingFactory.add();
+  }
+
+  public Vehicle newVehicle() {
+    return vehicleFactory.add();
+  }
+
   public Photo getPhoto(int id) {
     return photoFactory.get(id);
   }
 
   public Photo newPhoto() {
     return photoFactory.add();
+  }
+
+
+  /**
+   * @return the properties
+   */
+  public List<Property> getProperties() {
+    return propertyFactory.values();
+  }
+
+  public Property getProperty(int id) {
+    return propertyFactory.get(id);
+  }
+
+  public Property getProperty(String name) {
+    return propertyFactory.create(name);
+  }
+  
+  public Property newProperty() {
+    return propertyFactory.add();
   }
 
   /**
@@ -157,6 +202,42 @@ public class EntityManager implements jemstone.model.EntityManager, Printable {
     }
   }
 
+  public class BuildingFactory extends EntityFactory<Building> {
+    protected Building add() {
+      return add(idFactory.nextItemId());
+    }
+  
+    @Override
+    protected Building add(int id) {
+      return add(new Building(id));
+    }
+  
+    @Override
+    protected Building add(String name) {
+      Building item = add();
+      item.setName(name);
+      return item;
+    }
+  }
+
+  public class VehicleFactory extends EntityFactory<Vehicle> {
+    protected Vehicle add() {
+      return add(idFactory.nextItemId());
+    }
+
+    @Override
+    protected Vehicle add(int id) {
+      return add(new Vehicle(id));
+    }
+
+    @Override
+    protected Vehicle add(String name) {
+      Vehicle item = add();
+      item.setName(name);
+      return item;
+    }
+  }
+
   public class PhotoFactory extends EntityFactory<Photo> {
     protected Photo add() {
       return add(idFactory.nextPhotoId());
@@ -172,6 +253,24 @@ public class EntityManager implements jemstone.model.EntityManager, Printable {
       Photo photo = add();
       photo.setName(name);
       return photo;
+    }
+  }
+
+  public class PropertyFactory extends EntityFactory<Property> {
+    protected Property add() {
+      return add(idFactory.nextPropertyId());
+    }
+
+    @Override
+    protected Property add(int id) {
+      return add(new Property(id));
+    }
+
+    @Override
+    protected Property add(String name) {
+      Property property = add();
+      property.setName(name);
+      return property;
     }
   }
 }
