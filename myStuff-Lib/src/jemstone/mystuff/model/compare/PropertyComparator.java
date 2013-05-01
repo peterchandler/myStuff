@@ -1,16 +1,14 @@
 package jemstone.mystuff.model.compare;
 
-import jemstone.mystuff.dao.XmlConstants;
 import jemstone.mystuff.model.Building;
 import jemstone.mystuff.model.Item;
 import jemstone.mystuff.model.Property;
 import jemstone.mystuff.model.Property.F;
 import jemstone.mystuff.model.Vehicle;
 import jemstone.util.compare.CompareException;
-import jemstone.util.compare.EntityComparator;
 import jemstone.util.compare.ListComparator;
 
-public class PropertyComparator extends EntityComparator<Property> implements XmlConstants {
+public class PropertyComparator extends ItemComparator<Property> {
   private AddressComparator addressComparator;
   private ListComparator<Building> buildingComparator;
   private ListComparator<Vehicle> vehicleComparator;
@@ -38,8 +36,8 @@ public class PropertyComparator extends EntityComparator<Property> implements Xm
 
     try {
       boolean result = super.equals(o1, o2);
-      result &= equals(F.Name, o1.getName(), o2.getName());
-      result &= equals(F.Description, o1.getDescription(), o2.getDescription());
+      result &= equals(F.LandArea, o1.getLandArea(), o2.getLandArea());
+      result &= equals(F.LandValue, o1.getLandValue(), o2.getLandValue());
       result &= addressComparator.equals(o1.getAddress(), o2.getAddress());
       result &= buildingComparator.equals(o1.getBuildings(), o2.getBuildings());
       result &= vehicleComparator.equals(o1.getVehicles(), o2.getVehicles());

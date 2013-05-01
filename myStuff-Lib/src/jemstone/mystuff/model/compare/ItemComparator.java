@@ -18,6 +18,7 @@ public class ItemComparator<E extends Item> extends EntityComparator<E> implemen
     categoryComparator = new CategoryComparator(compareId);
     photoComparator = new ListComparator<Photo>(compareId, F.Photos.name(), new PhotoComparator(compareId));
     
+    addChild(categoryComparator);
     addChild(photoComparator);
   }
 

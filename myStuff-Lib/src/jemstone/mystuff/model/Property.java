@@ -3,9 +3,6 @@ package jemstone.mystuff.model;
 import java.io.PrintWriter;
 import java.util.List;
 
-import jemstone.model.Entity;
-import jemstone.model.HasDescription;
-import jemstone.model.HasName;
 import jemstone.util.NameOrderedList;
 import jemstone.util.Printer;
 
@@ -14,17 +11,17 @@ import jemstone.util.Printer;
  * @version 1.0
  * @created 08-Jun-2011 21:25:47
  */
-public class Property extends Entity implements HasName, HasDescription {
-  public enum F { Property, Name, Description, Address, Buildings, Vehicles, Items };
-  
-  /** The name of the property */
-  private String name;
-
-  /** A short description of the property */
-  private String description;
+public class Property extends Item {
+  public enum F { Property, Name, Description, Address, LandArea, LandValue, Buildings, Vehicles, Items };
   
   /** The address of this property */
   private Address address;
+  
+  /** The land area of this property */
+  private double landArea = Double.NaN;
+  
+  /** The land value of this property */
+  private double landValue = Double.NaN;
   
   /** A list of buildings on this property */
   private List<Building> buildings = new NameOrderedList<Building>(); 
@@ -39,26 +36,6 @@ public class Property extends Entity implements HasName, HasDescription {
     super(id);
   }
 
-  @Override
-  public String getName() {
-    return name;
-  }
-
-  @Override
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  @Override
-  public String getDescription() {
-    return description;
-  }
-
-  @Override
-  public void setDescription(String description) {
-    this.description = description;
-  }
-
   public Address getAddress() {
     if (address == null) {
       address = new Address();
@@ -68,6 +45,22 @@ public class Property extends Entity implements HasName, HasDescription {
 
   public void setAddress(Address address) {
     this.address = address;
+  }
+
+  public double getLandArea() {
+    return landArea;
+  }
+
+  public void setLandArea(double landArea) {
+    this.landArea = landArea;
+  }
+
+  public double getLandValue() {
+    return landValue;
+  }
+
+  public void setLandValue(double landValue) {
+    this.landValue = landValue;
   }
 
   public Building add(Building building) {

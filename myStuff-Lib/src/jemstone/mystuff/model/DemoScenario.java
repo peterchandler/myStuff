@@ -39,7 +39,18 @@ public class DemoScenario {
     house.setCategory(home);
     house.setPurchaseAmount(750000.0);
     house.setPurchaseDate(DateUtil.calendar(2001, 9, 1).getTime());
-    house.addPhoto(manager.newPhoto()).setName("House Photo");
+    house.setFloorArea(150);
+    house.setBuildCost(1500);
+    Photo photo3 = house.addPhoto(manager.newPhoto());
+    photo3.setName("house1.jpg");
+    photo3.setCaption("House Photo");
+    
+    Item ring = property.add(manager.newItem());
+    ring.setCategory(jewellery);
+    ring.setName("My Wedding Ring");
+    ring.setDescription("Simple gold band");
+    ring.setPurchaseDate(DateUtil.calendar(2002, 3, 16).getTime());
+    ring.setPurchaseAmount(3000);
     
     return manager;
   }

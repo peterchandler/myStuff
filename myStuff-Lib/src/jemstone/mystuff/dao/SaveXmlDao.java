@@ -66,6 +66,8 @@ public class SaveXmlDao extends AbstractSaveXmlDao<EntityManager> implements Xml
       write(property);
       write(Property.F.Name, property.getName());
       write(Property.F.Description, property.getDescription());
+      write(Property.F.LandArea, property.getLandArea());
+      write(Property.F.LandValue, property.getLandValue());
       
       saveAddress(property.getAddress());
       saveBuildings(property.getBuildings());
@@ -93,6 +95,8 @@ public class SaveXmlDao extends AbstractSaveXmlDao<EntityManager> implements Xml
       startTag(Building.F.Building);
 
       writeItem(building);
+      write(Building.F.FloorArea, building.getFloorArea());
+      write(Building.F.BuildCost, building.getBuildCost());
       
       endTag(Building.F.Building);
     }
@@ -127,6 +131,7 @@ public class SaveXmlDao extends AbstractSaveXmlDao<EntityManager> implements Xml
     write(Item.F.Description, item.getDescription());
     write(Item.F.PurchaseDate, item.getPurchaseDate());
     write(Item.F.PurchaseAmount, item.getPurchaseAmount());
+    write(Item.F.ReplacementAmount, item.getReplacementAmount());
     write(Item.F.CategoryId, item.getCategory());
     
     // Write photo ids

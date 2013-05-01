@@ -132,6 +132,12 @@ public class LoadXmlDao extends AbstractLoadXmlDao implements XmlConstants {
         case Description: 
           property.setDescription(value); 
           break;
+        case LandArea:
+          property.setLandArea(Double.valueOf(value));
+          break;
+        case LandValue:
+          property.setLandValue(Double.valueOf(value));
+          break;
         case Address:
           break;
         case Buildings:
@@ -205,12 +211,14 @@ public class LoadXmlDao extends AbstractLoadXmlDao implements XmlConstants {
         case Photos:
           break;
         case PurchaseAmount:
-          double amount = Double.parseDouble(value);
-          item.setPurchaseAmount(amount);
+          item.setPurchaseAmount(Double.parseDouble(value));
           break;
         case PurchaseDate:
           Date date = parseDate(value);
           item.setPurchaseDate(date);
+          break;
+        case ReplacementAmount:
+          item.setReplacementAmount(Double.parseDouble(value));
           break;
         case CategoryId:
           Category category = manager.getCategory(Integer.parseInt(value));
@@ -240,6 +248,12 @@ public class LoadXmlDao extends AbstractLoadXmlDao implements XmlConstants {
       try {
         switch (Building.F.valueOf(tag)) {
           case Building:
+            break;
+          case BuildCost:
+            building.setBuildCost(Double.valueOf(value));
+            break;
+          case FloorArea:
+            building.setFloorArea(Double.valueOf(value));
             break;
         }
       } catch (IllegalArgumentException e) {

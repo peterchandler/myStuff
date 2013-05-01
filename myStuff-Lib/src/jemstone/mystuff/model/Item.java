@@ -14,7 +14,9 @@ import jemstone.util.Printer;
  * Represents an item that is being tracked
  */
 public class Item extends Entity implements HasName, HasDescription {
-  public enum F { Item, Name, Description, PurchaseDate, PurchaseAmount, Category, CategoryId, Photos };
+  public enum F { Item, Name, Description, 
+                  PurchaseDate, PurchaseAmount, ReplacementAmount, 
+                  Category, CategoryId, Photos };
   
   /** The name of the category */
   private String name;
@@ -27,6 +29,9 @@ public class Item extends Entity implements HasName, HasDescription {
   
   /** The value of this item */
   private double purchaseAmount;
+  
+  /** The replacement value of this item */
+  private double replacementAmount = Double.NaN;
   
   /** The {@link Category} that is used to classify this item */
   private Category category;
@@ -72,6 +77,14 @@ public class Item extends Entity implements HasName, HasDescription {
 
   public void setPurchaseAmount(double amount) {
     this.purchaseAmount = amount;
+  }
+
+  public double getReplacementAmount() {
+    return replacementAmount;
+  }
+
+  public void setReplacementAmount(double replacementAmount) {
+    this.replacementAmount = replacementAmount;
   }
 
   public Category getCategory() {

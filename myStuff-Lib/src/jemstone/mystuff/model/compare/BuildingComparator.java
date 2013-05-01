@@ -17,6 +17,8 @@ public class BuildingComparator extends ItemComparator<Building> {
 
     try {
       boolean result = super.equals(o1, o2);
+      result &= equals(F.FloorArea, o1.getFloorArea(), o2.getFloorArea());
+      result &= equals(F.BuildCost, o1.getBuildCost(), o2.getBuildCost());
       return result;
     } catch (CompareException e) {
       e.add("Error comparing %s id=%s with %s id=%s", getClassName(o1), o1.getId(), getClassName(o2), o2.getId());
