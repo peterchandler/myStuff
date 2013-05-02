@@ -63,9 +63,7 @@ public class SaveXmlDao extends AbstractSaveXmlDao<EntityManager> implements Xml
     for (Property property : properties) {
       startTag(Property.F.Property);
 
-      write(property);
-      write(Property.F.Name, property.getName());
-      write(Property.F.Description, property.getDescription());
+      writeItem(property);
       write(Property.F.LandArea, property.getLandArea());
       write(Property.F.LandValue, property.getLandValue());
       

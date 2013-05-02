@@ -24,10 +24,13 @@ public class LoadXmlDao extends AbstractLoadXmlDao implements XmlConstants {
   private final CategoryParser categoryParser = new CategoryParser();
   private final PropertyParser propertyParser = new PropertyParser();
   private final AddressParser addressParser = new AddressParser();
-  private final ItemParser itemParser = new ItemParser();
+  private final ItemParser<Item> itemParser = new ItemParser<Item>();
   private final BuildingParser buildingParser = new BuildingParser();
   private final VehicleParser vehicleParser = new VehicleParser();
-  private final PhotoParser photoParser = new PhotoParser();
+  private final PhotoParser photoParser = new PhotoParser(itemParser);
+  private final PhotoParser propertyPhotoParser = new PhotoParser(propertyParser);
+  private final PhotoParser buildingPhotoParser = new PhotoParser(buildingParser);
+  private final PhotoParser vehiclePhotoParser = new PhotoParser(vehicleParser);
 
   public LoadXmlDao() throws DaoException {
     super(MY_NAMESPACE, MY_STUFF);
@@ -49,6 +52,21 @@ public class LoadXmlDao extends AbstractLoadXmlDao implements XmlConstants {
   @Override
   protected void parse() throws XmlPullParserException, IOException, DaoException {
     parse(null, null);
+  }
+
+  @Override
+  protected EntityParser getParser(String tag, String parentTag, EntityParser parentParser) {
+    EntityParser parser = super.getParser(tag, parentTag, parentParser);
+    if (parser == photoParser) {
+      if (parentParser == buildingParser) {
+        parser = buildingPhotoParser;
+      } else if (parentParser == vehicleParser) {
+        parser = vehiclePhotoParser;
+      } else if (parentParser == propertyParser) {
+        parser = propertyPhotoParser;
+      }
+    }
+    return parser;
   }
 
   private class IdFactoryParser implements EntityParser {
@@ -87,6 +105,7 @@ public class LoadXmlDao extends AbstractLoadXmlDao implements XmlConstants {
 
     @Override
     public void create(int id) {
+      // Special handling for category with id=0 (Other)
       if (id == 0) {
         category = manager.getCategoryFactory().get(id);
       } else {
@@ -109,55 +128,14 @@ public class LoadXmlDao extends AbstractLoadXmlDao implements XmlConstants {
     }
   }
   
-  private class PropertyParser implements EntityParser {
-    private Property property;
-
-    @Override
-    public void create(int id) {
-      if (id == 0) {
-        property = manager.getPropertyFactory().get(id);
-      } else {
-        property = manager.getPropertyFactory().create(id);
-      }
-    }
-
-    @Override
-    public void parse(String tag, String value) {
-      switch (Property.F.valueOf(tag)) {
-        case Property:
-          break;
-        case Name: 
-          property.setName(value); 
-          break;
-        case Description: 
-          property.setDescription(value); 
-          break;
-        case LandArea:
-          property.setLandArea(Double.valueOf(value));
-          break;
-        case LandValue:
-          property.setLandValue(Double.valueOf(value));
-          break;
-        case Address:
-          break;
-        case Buildings:
-          break;
-        case Vehicles:
-          break;
-        case Items:
-          break;
-      }
-    }
-  }
-  
   private class AddressParser implements EntityParser {
     private Address address;
-
+  
     @Override
     public void create(int id) {
-      address = propertyParser.property.getAddress();
+      address = propertyParser.item.getAddress();
     }
-
+  
     @Override
     public void parse(String tag, String value) {
       switch (Address.F.valueOf(tag)) {
@@ -182,19 +160,16 @@ public class LoadXmlDao extends AbstractLoadXmlDao implements XmlConstants {
     }
   }
 
-  private class ItemParser implements EntityParser {
-    protected Item item;
-
+  private class ItemParser<E extends Item> implements EntityParser {
+    protected E item;
+  
+    @SuppressWarnings("unchecked")
     @Override
     public void create(int id) {
-      if (id == 0) {
-        item = manager.getItemFactory().get(id);
-      } else {
-        item = manager.getItemFactory().create(id);
-      }
-      propertyParser.property.add(item);
+      item = (E) manager.getItemFactory().create(id);
+      propertyParser.item.add(item);
     }
-
+  
     @Override
     public void parse(String tag, String value) {
       switch (Item.F.valueOf(tag)) {
@@ -227,20 +202,45 @@ public class LoadXmlDao extends AbstractLoadXmlDao implements XmlConstants {
       }
     }
   }
-  
-  private class BuildingParser implements EntityParser {
-    private Building building;
-    
+
+  private class PropertyParser extends ItemParser<Property> {
     @Override
     public void create(int id) {
-      if (id == 0) {
-        building = manager.getBuildingFactory().get(id);
-      } else {
-        building = manager.getBuildingFactory().create(id);
+      item = manager.getPropertyFactory().create(id);
+    }
+
+    @Override
+    public void parse(String tag, String value) {
+      try {
+        switch (Property.F.valueOf(tag)) {
+          case Property:
+            break;
+          case LandArea:
+            item.setLandArea(Double.valueOf(value));
+            break;
+          case LandValue:
+            item.setLandValue(Double.valueOf(value));
+            break;
+          case Address:
+            break;
+          case Buildings:
+            break;
+          case Vehicles:
+            break;
+          case Items:
+            break;
+        }
+      } catch (IllegalArgumentException e) {
+        super.parse(tag, value);
       }
-      
-      itemParser.item = building;
-      propertyParser.property.add(building);
+    }
+  }
+  
+  private class BuildingParser extends ItemParser<Building> {
+    @Override
+    public void create(int id) {
+      item = manager.getBuildingFactory().create(id);
+      propertyParser.item.add(item);
     }
 
     @Override
@@ -250,30 +250,23 @@ public class LoadXmlDao extends AbstractLoadXmlDao implements XmlConstants {
           case Building:
             break;
           case BuildCost:
-            building.setBuildCost(Double.valueOf(value));
+            item.setBuildCost(Double.valueOf(value));
             break;
           case FloorArea:
-            building.setFloorArea(Double.valueOf(value));
+            item.setFloorArea(Double.valueOf(value));
             break;
         }
       } catch (IllegalArgumentException e) {
-        itemParser.parse(tag, value);
+        super.parse(tag, value);
       }
     }
   }
   
-  private class VehicleParser implements EntityParser {
-    private Vehicle vehicle;
-    
+  private class VehicleParser extends ItemParser<Vehicle> {
     @Override
     public void create(int id) {
-      if (id == 0) {
-        vehicle = manager.getVehicleFactory().get(id);
-      } else {
-        vehicle = manager.getVehicleFactory().create(id);
-      }
-      itemParser.item = vehicle;
-      propertyParser.property.add(vehicle);
+      item = manager.getVehicleFactory().create(id);
+      propertyParser.item.add(item);
     }
 
     @Override
@@ -281,42 +274,42 @@ public class LoadXmlDao extends AbstractLoadXmlDao implements XmlConstants {
       try {
         switch (Vehicle.F.valueOf(tag)) {
           case Color:
-            vehicle.setColor(value);
+            item.setColor(value);
             break;
           case Make:
-            vehicle.setMake(value);
+            item.setMake(value);
             break;
           case Model:
-            vehicle.setModel(value);
+            item.setModel(value);
             break;
           case Registration:
-            vehicle.setRegistration(value);
+            item.setRegistration(value);
             break;
           case Vehicle:
             break;
           case Year:
-            vehicle.setYear(Integer.valueOf(value));
+            item.setYear(Integer.valueOf(value));
             break;
         }
       } catch (IllegalArgumentException e) {
-        itemParser.parse(tag, value);
+        super.parse(tag, value);
       }
     }
   }
   
   private class PhotoParser implements EntityParser {
+    private ItemParser<?> parentParser;
     private Photo photo;
+
+    public PhotoParser(ItemParser<?> parentParser) {
+      super();
+      this.parentParser = parentParser;
+    }
 
     @Override
     public void create(int id) {
-      if (id == 0) {
-        photo = manager.getPhotoFactory().get(id);
-      } else {
-        photo = manager.getPhotoFactory().create(id);
-      }
-      
-      // Add to current item
-      itemParser.item.addPhoto(photo);
+      photo = manager.getPhotoFactory().create(id);
+      parentParser.item.addPhoto(photo);
     }
 
     @Override

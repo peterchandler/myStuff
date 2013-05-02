@@ -12,7 +12,7 @@ import jemstone.util.Printer;
  * @created 08-Jun-2011 21:25:47
  */
 public class Property extends Item {
-  public enum F { Property, Name, Description, Address, LandArea, LandValue, Buildings, Vehicles, Items };
+  public enum F { Property, Address, LandArea, LandValue, Buildings, Vehicles, Items };
   
   /** The address of this property */
   private Address address;
