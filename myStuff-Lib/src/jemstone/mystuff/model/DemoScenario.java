@@ -18,12 +18,27 @@ public class DemoScenario {
     Category vehicles = manager.getCategory("Vehicles");
     
     Property property = manager.newProperty();
+    property.setCategory(home);
+    property.setName("Family Home");
+    property.setDescription("Our family home in Takapuna");
+    property.setPurchaseAmount(450000);
+    property.setPurchaseDate(DateUtil.calendar(2001, 9, 1).getTime());
+    property.setLandArea(350);
+    property.setLandValue(500000);
+    
     Address address = property.getAddress();
     address.setStreet("1 Lake Road");
     address.setSuburb("Takapuna");
     address.setCity("Auckland");
     address.setPostCode("0123");
     address.setCountryCode("NZ");
+    
+    Building house = property.add(manager.newBuilding());
+    house.setCategory(home);
+    house.setFloorArea(220);
+    Photo photo3 = house.addPhoto(manager.newPhoto());
+    photo3.setName("house1.jpg");
+    photo3.setCaption("House Photo");
 
     Vehicle car = property.add(manager.newVehicle());
     car.setCategory(vehicles);
@@ -34,16 +49,6 @@ public class DemoScenario {
     car.setPurchaseDate(DateUtil.calendar(2010, 6, 15).getTime());
     car.addPhoto(manager.newPhoto()).setName("Car Photo 1");
     car.addPhoto(manager.newPhoto()).setName("Car Photo 2");
-    
-    Building house = property.add(manager.newBuilding());
-    house.setCategory(home);
-    house.setPurchaseAmount(750000.0);
-    house.setPurchaseDate(DateUtil.calendar(2001, 9, 1).getTime());
-    house.setFloorArea(150);
-    house.setBuildCost(1500);
-    Photo photo3 = house.addPhoto(manager.newPhoto());
-    photo3.setName("house1.jpg");
-    photo3.setCaption("House Photo");
     
     Item ring = property.add(manager.newItem());
     ring.setCategory(jewellery);

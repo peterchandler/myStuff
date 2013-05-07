@@ -1,13 +1,10 @@
 package jemstone.mystuff.model;
 
 public class Building extends Item {
-  public enum F { Building, FloorArea, BuildCost };
+  public enum F { Building, FloorArea };
   
   /** The floor area of the house in square metres/feet */
   private double floorArea;
-  
-  /** The cost of rebuilding per square metre/foot */
-  private double buildCost;
   
   /** Constructed using {@link EntityManager#newBuilding()} */
   Building(int id) {
@@ -20,13 +17,5 @@ public class Building extends Item {
 
   public void setFloorArea(double floorArea) {
     this.floorArea = floorArea;
-  }
-
-  public double getBuildCost() {
-    return buildCost;
-  }
-
-  public void setBuildCost(double buildCost) {
-    this.buildCost = buildCost;
   }
 }

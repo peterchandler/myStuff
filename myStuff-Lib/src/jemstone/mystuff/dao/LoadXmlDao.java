@@ -249,9 +249,6 @@ public class LoadXmlDao extends AbstractLoadXmlDao implements XmlConstants {
         switch (Building.F.valueOf(tag)) {
           case Building:
             break;
-          case BuildCost:
-            item.setBuildCost(Double.valueOf(value));
-            break;
           case FloorArea:
             item.setFloorArea(Double.valueOf(value));
             break;

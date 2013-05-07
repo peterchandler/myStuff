@@ -94,7 +94,6 @@ public class SaveXmlDao extends AbstractSaveXmlDao<EntityManager> implements Xml
 
       writeItem(building);
       write(Building.F.FloorArea, building.getFloorArea());
-      write(Building.F.BuildCost, building.getBuildCost());
       
       endTag(Building.F.Building);
     }
