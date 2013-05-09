@@ -12,7 +12,7 @@ import android.content.Context;
 public class MyStuffApp extends Application {
   private static final Logger log = Logger.getLogger(MyStuffApp.class);
   
-  public static final String paidPackageName = "jemstone.mystuff.ui";
+  public static final String paidPackageName = "jemstone.mystuff";
   public static final String freePackageName = "jemstone.mystuff.free";
 
   @Override

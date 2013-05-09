@@ -4,48 +4,35 @@
  * aapt tool from the resource data it found.  It
  * should not be modified by hand.
  */
-package jemstone.mystuff.lib;
+package jemstone.myandroid;
 
 public final class R {
 	public static final class id {
 		public static final int count = 0x7f060000;
-		public static final int undo = 0x7f060021;
-		public static final int freelimit_reached = 0x7f06001a;
 		public static final int accept = 0x7f060007;
-		public static final int freelimit_transactions = 0x7f06001d;
-		public static final int next = 0x7f06001f;
 		public static final int date_edit_dialog = 0x7f060013;
-		public static final int freelimit_scenarios = 0x7f06001b;
+		public static final int next = 0x7f06001f;
 		public static final int cancel = 0x7f060008;
 		public static final int add = 0x7f060004;
-		public static final int menu_configure = 0x7f060024;
 		public static final int amount = 0x7f06000d;
 		public static final int title = 0x7f06000f;
 		public static final int description = 0x7f06000c;
 		public static final int name = 0x7f06000b;
 		public static final int delete = 0x7f060005;
 		public static final int viewpager = 0x7f06000a;
-		public static final int category_list_fragment = 0x7f060012;
 		public static final int year = 0x7f060017;
 		public static final int ok = 0x7f060009;
 		public static final int move = 0x7f060006;
 		public static final int copy = 0x7f060002;
-		public static final int pager = 0x7f060011;
 		public static final int date_edit = 0x7f060014;
 		public static final int dialog_accept = 0x7f060019;
-		public static final int freelimit_accounts = 0x7f06001c;
 		public static final int dialog_cancel = 0x7f060018;
 		public static final int paste = 0x7f060003;
-		public static final int menu_add_category = 0x7f060025;
-		public static final int menu_settings = 0x7f060020;
-		public static final int redo = 0x7f060022;
-		public static final int subtitle = 0x7f060010;
-		public static final int selectCheckBox = 0x7f06000e;
 		public static final int month = 0x7f060016;
+		public static final int selectCheckBox = 0x7f06000e;
+		public static final int subtitle = 0x7f060010;
 		public static final int day = 0x7f060015;
 		public static final int cut = 0x7f060001;
-		public static final int reload = 0x7f060023;
-		public static final int link_to_google_play = 0x7f06001e;
 	}
 	public static final class style {
 		public static final int TextMedium_Dark = 0x7f090004;
@@ -91,79 +78,51 @@ public final class R {
 	}
 	public static final class string {
 		public static final int dateRange = 0x7f07001c;
-		public static final int titleDeleteCategory = 0x7f070003;
+		public static final int home = 0x7f070029;
 		public static final int save = 0x7f07001f;
 		public static final int undo = 0x7f070027;
-		public static final int freelimit_reached = 0x7f070009;
 		public static final int accept = 0x7f070020;
-		public static final int freelimit_scenarios = 0x7f07000a;
+		public static final int next = 0x7f070033;
+		public static final int repeatEvery = 0x7f07002c;
 		public static final int cancel = 0x7f07001e;
+		public static final int repeat = 0x7f07002b;
+		public static final int date = 0x7f07002f;
+		public static final int add = 0x7f070021;
 		public static final int amount = 0x7f070030;
+		public static final int jemstone = 0x7f070013;
 		public static final int description = 0x7f07002e;
 		public static final int titleVersionString = 0x7f070015;
-		public static final int repeatNext = 0x7f07001a;
-		public static final int titleApplication = 0x7f070000;
+		public static final int name = 0x7f07002d;
+		public static final int delete = 0x7f070022;
+		public static final int titleEdit = 0x7f070017;
 		public static final int titleCreate = 0x7f070016;
+		public static final int repeatNext = 0x7f07001a;
 		public static final int ok = 0x7f07001d;
 		public static final int configure = 0x7f070031;
 		public static final int refresh = 0x7f070032;
 		public static final int copy = 0x7f070025;
 		public static final int done = 0x7f07002a;
-		public static final int copyright = 0x7f070012;
-		public static final int freelimit_accounts = 0x7f07000b;
-		public static final int dateFormatLong = 0x7f07001b;
-		public static final int menu_add_category = 0x7f070008;
-		public static final int menu_settings = 0x7f070007;
-		public static final int paste = 0x7f070026;
-		public static final int redo = 0x7f070028;
-		public static final int home = 0x7f070029;
-		public static final int freelimit_transactions = 0x7f07000c;
-		public static final int next = 0x7f070033;
-		public static final int repeatEvery = 0x7f07002c;
-		public static final int repeat = 0x7f07002b;
-		public static final int add = 0x7f070021;
-		public static final int date = 0x7f07002f;
-		public static final int menu_configure = 0x7f070006;
-		public static final int hint_description = 0x7f070011;
-		public static final int freelimit_demoscenario = 0x7f07000d;
-		public static final int jemstone = 0x7f070013;
-		public static final int freelimit_upgrade = 0x7f07000e;
-		public static final int name = 0x7f07002d;
-		public static final int delete = 0x7f070022;
-		public static final int titleEdit = 0x7f070017;
-		public static final int titleCategoryList = 0x7f070001;
-		public static final int hint_category_name = 0x7f070010;
-		public static final int titleSelectCategory = 0x7f070004;
-		public static final int titleFreeLimitExceeded = 0x7f070002;
 		public static final int edit = 0x7f070023;
 		public static final int titleRepeatEdit = 0x7f070018;
+		public static final int copyright = 0x7f070012;
 		public static final int titleSelectDate = 0x7f070019;
-		public static final int titleSelectNewCategory = 0x7f070005;
+		public static final int dateFormatLong = 0x7f07001b;
+		public static final int paste = 0x7f070026;
+		public static final int redo = 0x7f070028;
 		public static final int cut = 0x7f070024;
 		public static final int link_to_google_play = 0x7f070014;
-		public static final int freelimit_upgrade_link = 0x7f07000f;
-	}
-	public static final class menu {
-		public static final int main_activity_menu = 0x7f0a0002;
-		public static final int main_activity = 0x7f0a0001;
-		public static final int activity_main = 0x7f0a0000;
 	}
 	public static final class layout {
+		public static final int goto_button = 0x7f03000b;
 		public static final int dialog_buttons = 0x7f030009;
+		public static final int select_checkbox = 0x7f03000f;
+		public static final int date_edit_layout = 0x7f030007;
 		public static final int date_edit_dialog = 0x7f030006;
+		public static final int list_item_with_next_button = 0x7f03000e;
 		public static final int actionbar_dropdown_title = 0x7f030001;
 		public static final int list_dialog = 0x7f03000c;
 		public static final int list_fragment = 0x7f03000d;
 		public static final int actionbar_dropdown_item = 0x7f030000;
-		public static final int goto_button = 0x7f03000b;
-		public static final int select_checkbox = 0x7f03000f;
-		public static final int category_list_activity = 0x7f030005;
-		public static final int date_edit_layout = 0x7f030007;
-		public static final int list_item_with_next_button = 0x7f03000e;
-		public static final int category_edit_fragment = 0x7f030004;
-		public static final int category_edit_activity = 0x7f030003;
-		public static final int free_limit_exceeded_dialog = 0x7f03000a;
-		public static final int activity_main = 0x7f030002;
 		public static final int delete_button = 0x7f030008;
 	}
 	public static final class drawable {
@@ -219,7 +178,6 @@ public final class R {
 		public static final int textfield_multiline_activated_holo_dark = 0x7f020055;
 		public static final int textfield_disabled_selected = 0x7f020051;
 		public static final int textfield_multiline_default_holo_dark = 0x7f020057;
-		public static final int ic_action_search = 0x7f020024;
 		public static final int textfield_default_holo_light = 0x7f02004b;
 		public static final int textfield_search_default = 0x7f020060;
 		public static final int wheel_bg = 0x7f02006f;

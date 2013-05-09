@@ -1,14 +1,23 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="jemstone.mystuff.free"
-    android:versionCode="1"
-    android:versionName="1.0">
-
-    <uses-sdk android:minSdkVersion="14" android:targetSdkVersion="15" />
-
-    <application android:label="@string/titleApplication"
-        android:icon="@drawable/ic_launcher"
-        android:theme="@style/AppTheme">
-
-    </application>
-
+  package="jemstone.mystuff.free"
+  android:versionCode="1"
+  android:versionName="0.1.0">
+  <uses-sdk
+    android:minSdkVersion="11"
+    android:targetSdkVersion="11"/>
+  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+  <application
+    android:name="jemstone.mystuff.ui.MyStuffApp"
+    android:icon="@drawable/myapp_icon"
+    android:label="@string/titleApplication"
+    android:theme="@style/AppTheme">
+    <activity
+      android:name="jemstone.mystuff.ui.category.CategoryListActivity"
+      android:label="@string/titleApplication">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN"/>
+        <category android:name="android.intent.category.LAUNCHER"/>
+      </intent-filter>
+    </activity>
+  </application>
 </manifest>

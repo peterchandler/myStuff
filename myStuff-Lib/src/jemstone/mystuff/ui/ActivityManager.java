@@ -3,6 +3,7 @@ package jemstone.mystuff.ui;
 import java.io.Serializable;
 
 import jemstone.mystuff.model.Category;
+import jemstone.mystuff.ui.category.CategoryListActivity;
 import jemstone.util.MyRuntimeException;
 import jemstone.util.log.Logger;
 import android.app.Activity;
@@ -12,10 +13,10 @@ public class ActivityManager implements jemstone.ui.ActivityManager {
   private static final Logger log = Logger.getLogger(ActivityManager.class);
 
   private static final Definition[] definitions = {
-//    new Definition(AboutActivity.class, false, false, false, Intent.FLAG_ACTIVITY_CLEAR_TOP),
-//    new Definition(ConfigurationActivity.class, false, false, false, Intent.FLAG_ACTIVITY_CLEAR_TOP),
-//    new Definition(CategoryEditActivity.class, false, false, false, Intent.FLAG_ACTIVITY_CLEAR_TOP),
-//    new Definition(CategoryListActivity.class, false, false, false, Intent.FLAG_ACTIVITY_CLEAR_TOP),
+//    new Definition(AboutActivity.class, false, Intent.FLAG_ACTIVITY_CLEAR_TOP),
+//    new Definition(ConfigurationActivity.class, false, Intent.FLAG_ACTIVITY_CLEAR_TOP),
+//    new Definition(CategoryEditActivity.class, false, Intent.FLAG_ACTIVITY_CLEAR_TOP),
+    new Definition(CategoryListActivity.class, false, Intent.FLAG_ACTIVITY_CLEAR_TOP),
   };
 
   public static final String PARENT_DEFN = Definition.class.getName();
