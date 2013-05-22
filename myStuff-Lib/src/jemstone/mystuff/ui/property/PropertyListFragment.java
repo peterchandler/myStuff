@@ -1,8 +1,8 @@
-package jemstone.mystuff.ui.category;
+package jemstone.mystuff.ui.property;
 
-import jemstone.mystuff.command.DeleteCategoryCommand;
+import jemstone.mystuff.command.DeletePropertyCommand;
 import jemstone.mystuff.lib.R;
-import jemstone.mystuff.model.Category;
+import jemstone.mystuff.model.Property;
 import jemstone.mystuff.ui.BaseFragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,11 +11,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-public class CategoryListFragment extends BaseFragment {
-  private CategoryListAdapter adapter;
+public class PropertyListFragment extends BaseFragment {
+  private PropertyListAdapter adapter;
   private ListView list;
 
-  public CategoryListFragment() {
+  public PropertyListFragment() {
     super();
     setMenuItemHandler(new MenuItemHandler());
   }
@@ -27,7 +27,7 @@ public class CategoryListFragment extends BaseFragment {
     View view = inflater.inflate(R.layout.list_fragment, container);
 
     // Create adapter
-    adapter = new CategoryListAdapter(view.getContext(), new OnNextClickListener());
+    adapter = new PropertyListAdapter(view.getContext());
 
     list = (ListView)view.findViewById(android.R.id.list);
     list.setAdapter(adapter);
@@ -42,33 +42,33 @@ public class CategoryListFragment extends BaseFragment {
     super.onActivityCreated(savedInstanceState);
 
     // Initialize the header
-    setTitle(R.string.titleCategoryList);
+    setTitle(R.string.titlePropertyList);
   }
 
   @Override
   public void onRefresh() {
     adapter.notifyDataSetChanged();
-    adapter.scrollTo(list, getParameters().getCategory());
+    adapter.scrollTo(list, getParameters().getProperty());
   }
 
-  private void deleteCategory(DeleteCategoryCommand command) {
-    log.debug("deleteCategory [category=%s]", command.getCategoryNames());
+  private void deleteProperty(DeletePropertyCommand command) {
+    log.debug("deleteProperty [Property=%s]", command.getPropertyNames());
 
     execute(command);
 
 //    if (command.getNumTransactionsToMove() != 0) {
-//      selectNewCategory(command);
+//      selectNewProperty(command);
 //    } else {
 //      execute(command);
 //    }
   }
 
-  private void selectNewCategory(final DeleteCategoryCommand command) {
-    final CategorySelectDialog dialog = new CategorySelectDialog(getParameters());
+  private void selectNewProperty(final DeletePropertyCommand command) {
+    final PropertySelectDialog dialog = new PropertySelectDialog(getParameters());
   
     // Set custom title
-    final String title = getString(R.string.titleDeleteCategory, command.getCategoryNames());
-//    final String subtitle = getString(R.string.titleSelectNewCategory, command.getNumTransactionsToMove(), command.getCategoryNames());
+    final String title = getString(R.string.titleDeleteProperty, command.getPropertyNames());
+//    final String subtitle = getString(R.string.titleSelectNewProperty, command.getNumTransactionsToMove(), command.getPropertyNames());
     dialog.setTitle(title);
 //    dialog.setSubTitle(subtitle);
   
@@ -76,8 +76,8 @@ public class CategoryListFragment extends BaseFragment {
       @Override
       public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         // Set the selected account type
-        Category newCategory = dialog.getAdapter().getItem(position);
-        command.setNewCategory(newCategory);
+        Property newProperty = dialog.getAdapter().getItem(position);
+        command.setNewProperty(newProperty);
   
         // Close the dialog
         dialog.dismiss();
@@ -95,8 +95,8 @@ public class CategoryListFragment extends BaseFragment {
   private class OnItemClickListener implements AdapterView.OnItemClickListener {
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-      // Set the selected category, and start the edit activity
-      getActivityManager().startCategoryEditActivity(adapter.getItem(position), false);
+      // Set the selected Property, and start the edit activity
+      getActivityManager().startPropertyEditActivity(adapter.getItem(position), false);
     }
   }
 
@@ -114,9 +114,9 @@ public class CategoryListFragment extends BaseFragment {
     @Override
     public void onClick(View view) {
       Object tag = view.getTag();
-      if (tag != null && tag instanceof Category) {
+      if (tag != null && tag instanceof Property) {
         // TODO Start activity
-//        getActivityManager().startTransByCategoryActivity(getParameters().getScenario(), (Category) tag);
+//        getActivityManager().startTransByPropertyActivity(getParameters().getScenario(), (Property) tag);
       }
     }
   }
@@ -132,7 +132,7 @@ public class CategoryListFragment extends BaseFragment {
     }
 
     @Override
-    public boolean canAddCategory() {
+    public boolean canAddProperty() {
       return true;
     }
 
@@ -153,12 +153,12 @@ public class CategoryListFragment extends BaseFragment {
 
     @Override
     public void onAdd() {
-      onAddCategory();
+      onAddProperty();
     }
 
     @Override
     public void onDelete() {
-      deleteCategory(new DeleteCategoryCommand(adapter.getSelectedItems()));
+      deleteProperty(new DeletePropertyCommand(adapter.getSelectedItems()));
       adapter.setSelectionMode(false);
     }
 

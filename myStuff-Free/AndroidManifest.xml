@@ -10,7 +10,7 @@
     android:name="jemstone.mystuff.ui.MyStuffApp"
     android:icon="@drawable/myapp_icon"
     android:label="@string/titleApplication"
-    android:theme="@style/AppTheme">
+    android:theme="@style/MyTheme">
     <activity
       android:name="jemstone.mystuff.ui.category.CategoryListActivity"
       android:label="@string/titleApplication">

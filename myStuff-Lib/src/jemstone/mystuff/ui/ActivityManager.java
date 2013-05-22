@@ -3,7 +3,9 @@ package jemstone.mystuff.ui;
 import java.io.Serializable;
 
 import jemstone.mystuff.model.Category;
+import jemstone.mystuff.model.Property;
 import jemstone.mystuff.ui.category.CategoryListActivity;
+import jemstone.mystuff.ui.property.PropertyListActivity;
 import jemstone.util.MyRuntimeException;
 import jemstone.util.log.Logger;
 import android.app.Activity;
@@ -17,6 +19,7 @@ public class ActivityManager implements jemstone.ui.ActivityManager {
 //    new Definition(ConfigurationActivity.class, false, Intent.FLAG_ACTIVITY_CLEAR_TOP),
 //    new Definition(CategoryEditActivity.class, false, Intent.FLAG_ACTIVITY_CLEAR_TOP),
     new Definition(CategoryListActivity.class, false, Intent.FLAG_ACTIVITY_CLEAR_TOP),
+    new Definition(PropertyListActivity.class, false, Intent.FLAG_ACTIVITY_CLEAR_TOP),
   };
 
   public static final String PARENT_DEFN = Definition.class.getName();
@@ -106,7 +109,19 @@ public class ActivityManager implements jemstone.ui.ActivityManager {
 
   public void startCategoryListActivity() {
     ActivityParameters parameters = new ActivityParameters();
-//    startActivity(CategoryListActivity.class, parameters);
+    startActivity(CategoryListActivity.class, parameters);
+  }
+
+  public void startPropertyEditActivity(Property property, boolean isNew) {
+    ActivityParameters parameters = new ActivityParameters();
+    parameters.setProperty(property);
+    parameters.setNewEntity(isNew);
+//    startActivity(PropertyEditActivity.class, parameters);
+  }
+
+  public void startPropertyListActivity() {
+    ActivityParameters parameters = new ActivityParameters();
+    startActivity(PropertyListActivity.class, parameters);
   }
 
   private static class Definition implements Serializable {

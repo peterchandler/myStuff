@@ -10,14 +10,15 @@
     android:name="jemstone.mystuff.ui.MyStuffApp"
     android:icon="@drawable/myapp_icon"
     android:label="@string/titleApplication"
-    android:theme="@style/AppTheme">
+    android:theme="@style/MyTheme">
     <activity
-      android:name="jemstone.mystuff.ui.category.CategoryListActivity"
+      android:name="jemstone.mystuff.ui.property.PropertyListActivity"
       android:label="@string/titleApplication">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
         <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
     </activity>
-  </application>
+    <activity android:name="jemstone.mystuff.ui.category.CategoryListActivity"/>
+    </application>
 </manifest>

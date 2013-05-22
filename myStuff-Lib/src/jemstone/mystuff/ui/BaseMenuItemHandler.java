@@ -1,8 +1,8 @@
 package jemstone.mystuff.ui;
 
 import jemstone.mystuff.command.AddCategoryCommand;
+import jemstone.mystuff.command.AddPropertyCommand;
 import jemstone.mystuff.lib.R;
-import jemstone.mystuff.model.Category;
 import jemstone.ui.MenuItemHandler;
 import jemstone.util.log.Logger;
 import android.view.Menu;
@@ -46,8 +46,6 @@ public class BaseMenuItemHandler implements MenuItemHandler<ActivityManager,Acti
   public boolean onMenuItemSelected(MenuItem item, ActivityParameters parameters, ActivityManager activityManager) {
     log.debug("onMenuItemSelected: %s", parameters);
 
-    final Category category = parameters.getCategory();
-    
     final int menuItemId = item.getItemId();
     
     // See if the command button handler processes the menu item
@@ -128,6 +126,7 @@ public class BaseMenuItemHandler implements MenuItemHandler<ActivityManager,Acti
       setVisible(R.id.paste, canPaste());
       setVisible(R.id.menu_configure, canConfig());
       setVisible(R.id.menu_add_category, canAddCategory());
+      setVisible(R.id.menu_add_property, canAddProperty());
     }
   }
 
@@ -144,6 +143,10 @@ public class BaseMenuItemHandler implements MenuItemHandler<ActivityManager,Acti
   }
 
   public boolean canAddCategory() {
+    return (fragment != null);
+  }
+
+  public boolean canAddProperty() {
     return (fragment != null);
   }
 
@@ -210,7 +213,13 @@ public class BaseMenuItemHandler implements MenuItemHandler<ActivityManager,Acti
     fragment.getActivityManager().startCategoryEditActivity(command.getCategory(), true);
   }
 
-  public void onChooseScenario() {
+  public void onAddProperty() {
+    // Create a new account
+    AddPropertyCommand command = new AddPropertyCommand();
+    fragment.execute(command);
+
+    // Set the new category id, and start the edit activity
+    fragment.getActivityManager().startPropertyEditActivity(command.getProperty(), true);
   }
 
   @Override
