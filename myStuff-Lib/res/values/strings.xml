@@ -20,4 +20,14 @@
   <string name="freelimit_upgrade_link">Upgrade on Google Play</string>
   <string name="hint_category_name">Enter a name</string>
   <string name="hint_description">Enter a description</string>
+  <string-array name="main_groups">
+    <item>Categories</item>
+    <item>Change Theme</item>
+    <item>About</item>
+  </string-array>
+  <string-array name="main_descriptions">
+    <item>Configure categories to allow items to be categorised for reporting purposes</item>
+    <item>Choose a dark, light or light with dark header theme</item>
+    <item>Display version and copyright details</item>
+  </string-array>
 </resources>

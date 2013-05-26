@@ -5,18 +5,20 @@ import java.io.Serializable;
 import jemstone.mystuff.model.Category;
 import jemstone.mystuff.model.Property;
 import jemstone.mystuff.ui.category.CategoryListActivity;
+import jemstone.mystuff.ui.config.AboutActivity;
+import jemstone.mystuff.ui.config.ConfigurationActivity;
 import jemstone.mystuff.ui.property.PropertyListActivity;
 import jemstone.util.MyRuntimeException;
 import jemstone.util.log.Logger;
 import android.app.Activity;
 import android.content.Intent;
 
-public class ActivityManager implements jemstone.ui.ActivityManager {
+public class ActivityManager extends jemstone.ui.ActivityManager {
   private static final Logger log = Logger.getLogger(ActivityManager.class);
 
   private static final Definition[] definitions = {
-//    new Definition(AboutActivity.class, false, Intent.FLAG_ACTIVITY_CLEAR_TOP),
-//    new Definition(ConfigurationActivity.class, false, Intent.FLAG_ACTIVITY_CLEAR_TOP),
+    new Definition(AboutActivity.class, false, Intent.FLAG_ACTIVITY_CLEAR_TOP),
+    new Definition(ConfigurationActivity.class, false, Intent.FLAG_ACTIVITY_CLEAR_TOP),
 //    new Definition(CategoryEditActivity.class, false, Intent.FLAG_ACTIVITY_CLEAR_TOP),
     new Definition(CategoryListActivity.class, false, Intent.FLAG_ACTIVITY_CLEAR_TOP),
     new Definition(PropertyListActivity.class, false, Intent.FLAG_ACTIVITY_CLEAR_TOP),
@@ -27,6 +29,7 @@ public class ActivityManager implements jemstone.ui.ActivityManager {
   private final BaseActivity parent;
 
   public ActivityManager(BaseActivity parent) {
+    super(parent);
     this.parent = parent;
   }
 
@@ -79,25 +82,25 @@ public class ActivityManager implements jemstone.ui.ActivityManager {
     }
     return false;
   }
-  
 
   public static boolean isHomeActivity(Class<? extends Activity> activityClass) {
     Definition defn = find(activityClass);
     return (defn != null && defn.homeActivity);
   }
 
-
   public void startAboutActivity() {
     ActivityParameters parameters = new ActivityParameters();
-//    startActivity(AboutActivity.class, parameters);
+    startActivity(AboutActivity.class, parameters);
   }
 
   public void startHomeActivity() {
+    startPropertyListActivity();
   }
 
+  @Override
   public void startConfigurationActivity() {
     ActivityParameters parameters = new ActivityParameters();
-//    startActivity(ConfigurationActivity.class, parameters);
+    startActivity(ConfigurationActivity.class, parameters);
   }
 
   public void startCategoryEditActivity(Category category, boolean isNewCategory) {

@@ -20,5 +20,7 @@
       </intent-filter>
     </activity>
     <activity android:name="jemstone.mystuff.ui.category.CategoryListActivity"/>
-    </application>
+    <activity android:name="jemstone.mystuff.ui.config.ConfigurationActivity"/>
+    <activity android:name="jemstone.mystuff.ui.config.AboutActivity"/>
+  </application>
 </manifest>

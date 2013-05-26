@@ -143,7 +143,7 @@ public class PropertyListFragment extends BaseFragment {
     
     @Override
     public boolean canConfig() {
-      return false;
+      return true;
     }
 
     @Override

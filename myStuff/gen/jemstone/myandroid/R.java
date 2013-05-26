@@ -10,28 +10,28 @@ public final class R {
 	public static final class id {
 		public static final int count = 0x7f060000;
 		public static final int accept = 0x7f060007;
-		public static final int date_edit_dialog = 0x7f060013;
-		public static final int next = 0x7f06001f;
+		public static final int date_edit_dialog = 0x7f060016;
+		public static final int next = 0x7f060021;
 		public static final int cancel = 0x7f060008;
 		public static final int add = 0x7f060004;
 		public static final int amount = 0x7f06000d;
-		public static final int title = 0x7f06000f;
+		public static final int title = 0x7f060012;
 		public static final int description = 0x7f06000c;
 		public static final int name = 0x7f06000b;
 		public static final int delete = 0x7f060005;
 		public static final int viewpager = 0x7f06000a;
-		public static final int year = 0x7f060017;
+		public static final int year = 0x7f06001a;
 		public static final int ok = 0x7f060009;
 		public static final int move = 0x7f060006;
 		public static final int copy = 0x7f060002;
-		public static final int date_edit = 0x7f060014;
-		public static final int dialog_accept = 0x7f060019;
-		public static final int dialog_cancel = 0x7f060018;
+		public static final int date_edit = 0x7f060017;
+		public static final int dialog_accept = 0x7f06001c;
+		public static final int dialog_cancel = 0x7f06001b;
 		public static final int paste = 0x7f060003;
-		public static final int month = 0x7f060016;
+		public static final int month = 0x7f060019;
 		public static final int selectCheckBox = 0x7f06000e;
-		public static final int subtitle = 0x7f060010;
-		public static final int day = 0x7f060015;
+		public static final int subtitle = 0x7f060013;
+		public static final int day = 0x7f060018;
 		public static final int cut = 0x7f060001;
 	}
 	public static final class style {
@@ -79,53 +79,54 @@ public final class R {
 		public static final int headerEndColor = 0x7f040007;
 	}
 	public static final class string {
-		public static final int dateRange = 0x7f07000a;
-		public static final int home = 0x7f070017;
-		public static final int save = 0x7f07000d;
-		public static final int undo = 0x7f070015;
-		public static final int accept = 0x7f07000e;
-		public static final int next = 0x7f070021;
-		public static final int repeatEvery = 0x7f07001a;
-		public static final int cancel = 0x7f07000c;
-		public static final int repeat = 0x7f070019;
-		public static final int date = 0x7f07001d;
-		public static final int add = 0x7f07000f;
-		public static final int amount = 0x7f07001e;
+		public static final int dateRange = 0x7f07000b;
+		public static final int home = 0x7f070018;
+		public static final int save = 0x7f07000e;
+		public static final int undo = 0x7f070016;
+		public static final int accept = 0x7f07000f;
+		public static final int next = 0x7f070022;
+		public static final int repeatEvery = 0x7f07001b;
+		public static final int cancel = 0x7f07000d;
+		public static final int titleSelectTheme = 0x7f070008;
+		public static final int repeat = 0x7f07001a;
+		public static final int date = 0x7f07001e;
+		public static final int add = 0x7f070010;
+		public static final int amount = 0x7f07001f;
 		public static final int jemstone = 0x7f070001;
-		public static final int description = 0x7f07001c;
+		public static final int description = 0x7f07001d;
 		public static final int titleVersionString = 0x7f070003;
-		public static final int name = 0x7f07001b;
-		public static final int delete = 0x7f070010;
+		public static final int name = 0x7f07001c;
+		public static final int delete = 0x7f070011;
 		public static final int titleEdit = 0x7f070005;
 		public static final int titleCreate = 0x7f070004;
-		public static final int repeatNext = 0x7f070008;
-		public static final int ok = 0x7f07000b;
-		public static final int configure = 0x7f07001f;
-		public static final int refresh = 0x7f070020;
-		public static final int copy = 0x7f070013;
-		public static final int done = 0x7f070018;
-		public static final int edit = 0x7f070011;
+		public static final int repeatNext = 0x7f070009;
+		public static final int ok = 0x7f07000c;
+		public static final int configure = 0x7f070020;
+		public static final int refresh = 0x7f070021;
+		public static final int copy = 0x7f070014;
+		public static final int done = 0x7f070019;
+		public static final int edit = 0x7f070012;
 		public static final int titleRepeatEdit = 0x7f070006;
 		public static final int copyright = 0x7f070000;
 		public static final int titleSelectDate = 0x7f070007;
-		public static final int dateFormatLong = 0x7f070009;
-		public static final int paste = 0x7f070014;
-		public static final int redo = 0x7f070016;
-		public static final int cut = 0x7f070012;
+		public static final int dateFormatLong = 0x7f07000a;
+		public static final int paste = 0x7f070015;
+		public static final int redo = 0x7f070017;
+		public static final int cut = 0x7f070013;
 		public static final int link_to_google_play = 0x7f070002;
 	}
 	public static final class layout {
-		public static final int goto_button = 0x7f03000b;
-		public static final int dialog_buttons = 0x7f030009;
-		public static final int select_checkbox = 0x7f030010;
-		public static final int date_edit_layout = 0x7f030007;
-		public static final int date_edit_dialog = 0x7f030006;
-		public static final int list_item_with_next_button = 0x7f03000e;
-		public static final int actionbar_dropdown_title = 0x7f030001;
-		public static final int list_dialog = 0x7f03000c;
-		public static final int list_fragment = 0x7f03000d;
-		public static final int actionbar_dropdown_item = 0x7f030000;
-		public static final int delete_button = 0x7f030008;
+		public static final int goto_button = 0x7f03000c;
+		public static final int dialog_buttons = 0x7f03000a;
+		public static final int select_checkbox = 0x7f030014;
+		public static final int date_edit_layout = 0x7f030008;
+		public static final int date_edit_dialog = 0x7f030007;
+		public static final int list_item_with_next_button = 0x7f03000f;
+		public static final int actionbar_dropdown_title = 0x7f030002;
+		public static final int list_dialog = 0x7f03000d;
+		public static final int list_fragment = 0x7f03000e;
+		public static final int actionbar_dropdown_item = 0x7f030001;
+		public static final int delete_button = 0x7f030009;
 	}
 	public static final class drawable {
 		public static final int navigation_refresh_holo_light = 0x7f020031;
@@ -221,6 +222,7 @@ public final class R {
 	}
 	public static final class array {
 		public static final int day_of_week = 0x7f080002;
+		public static final int themes = 0x7f080003;
 		public static final int repeat_frequency = 0x7f080000;
 		public static final int repeat_monthly = 0x7f080001;
 	}
